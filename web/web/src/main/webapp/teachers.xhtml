@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Teachers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
+</h:head>
+
+<h:body>
+    <style>
+        body {
+            background-color: #00723F;
+            color: black;
+        }
+
+        .container {
+            background-color: white;
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .btn-primary {
+            background-color: #DD971A;
+            border-color: #DD971A;
+        }
+
+        .btn-primary:hover {
+            background-color: #C28814;
+            border-color: #C28814;
+        }
+
+        .form-control {
+            background-color: #F7F7F7;
+            border-color: #DDDDDD;
+            color: black;
+        }
+
+        .table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .table th, .table td {
+            border: 1px solid #DDDDDD;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #DDDDDD;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #F2F2F2;
+        }
+        h2{
+            text-align: center;
+        }
+    </style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Catálogo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="learningunits.xhtml">Asignaturas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="teachers.xhtml">Maestros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.xhtml">Perfil</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <h:form>
+                        <p:commandButton class="btn btn-success" value="Cerrar sesión" action="#{loginUI.logout()}" />
+                    </h:form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container">
+        <h2>Maestros</h2>
+        <p:link style="#{(loginUI.user.isAdmin == 0) ? 'display: none;' : ''}"
+                outcome="createteacher.xhtml" value="Crear Profesor" />
+        <h:form id="teacherForm">
+            <p:dataTable value="#{teacherBeanUI.teachers}" var="teacher" emptyMessage="No hay maestros registrados">
+                <p:column headerText="ID">
+                    <h:outputText value="#{teacher.idTeacher}" />
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{teacher.name}" />
+                </p:column>
+                <p:column headerText="Apellido">
+                    <h:outputText value="#{teacher.surname}" />
+                </p:column>
+                <p:column headerText="RFC">
+                    <h:outputText value="#{teacher.rfc}" />
+                </p:column>
+                <p:column headerText="Unidades de Aprendizaje">
+                    <ui:repeat value="#{teacher.learningunitList}" var="learningUnit">
+                        <h:outputText value="#{learningUnit.name}" /><br />
+                    </ui:repeat>
+                    <h:outputText value="Sin unidades de Aprendizaje" rendered="#{empty teacher.learningunitList}" />
+                </p:column>
+                <p:column headerText="Acciones">
+                    <p:commandButton value="Modificar" action="#{teacherBeanUI.redirectToModify(teacher)}" styleClass="btn btn-warning mr-2"/>
+                    <p:commandButton value="Eliminar" action="#{teacherBeanUI.deleteTeacher(teacher)}" styleClass="btn btn-danger mr-2" onclick="if(!confirm('¿Deseas eliminar este profesor?')) return false;" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </div>
+</h:body>
+
+</html>

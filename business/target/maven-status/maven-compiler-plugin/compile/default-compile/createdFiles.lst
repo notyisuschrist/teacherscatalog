@@ -1,0 +1,8 @@
+mx\changosuave\facade\TeacherFacade.class
+mx\changosuave\delegate\TeacherDelegate.class
+mx\changosuave\delegate\UserDelegate.class
+mx\changosuave\facade\UserFacade.class
+mx\changosuave\integracion\ServiceFacadeLocator.class
+test\test.class
+mx\changosuave\delegate\LearningUnitDelegate.class
+mx\changosuave\facade\LearningUnitFacade.class

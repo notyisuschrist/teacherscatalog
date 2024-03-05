@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Learning Units</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+  
+  <style>
+    body {
+      background-color: #00723F; 
+      color: black;
+    }
+    
+    .container {
+      background-color: white; 
+      margin-top: 50px;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    
+    .btn-primary {
+      background-color: #DD971A;
+      border-color: #DD971A;
+    }
+
+    .btn-primary:hover {
+      background-color: #C28814;
+      border-color: #C28814;
+    }
+
+   
+    .form-control {
+      background-color: #F7F7F7;
+      border-color: #DDDDDD;
+      color: black;
+    }
+
+    .table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table th, .table td {
+      border: 1px solid #DDDDDD;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .table th {
+      background-color: #DDDDDD;
+    }
+
+    .table tr:nth-child(even) {
+      background-color: #F2F2F2;
+    }
+    h2{
+            text-align: center;
+        }
+  </style>
+
+</h:head>
+
+<h:body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Catálogo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="learningunits.xhtml">Asignaturas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="teachers.xhtml" style="#{(loginUI.user.isAdmin == 0) ? 'display: none;' : ''}">Maestros</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.xhtml">Perfil</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <h:form>
+                        <p:commandButton class="btn btn-success" value="Cerrar sesión" action="#{loginUI.logout()}" />
+                    </h:form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+  <div class="container">
+
+    <h2>Unidades de Aprendizaje</h2>
+    
+    <p:commandLink style="#{(loginUI.user.isAdmin == 0) ? 'display: none;' : ''}" action="createlearningunit" value="Crear nueva unidad"/>
+
+    <p:dataTable value="#{learningUnitUI.learningUnits}" var="learningUnit" styleClass="table table-bordered">
+        <p:column headerText="ID">
+            #{learningUnit.idLearningUnit} 
+        </p:column>
+
+        <p:column headerText="Nombre">
+            #{learningUnit.name}
+        </p:column>
+
+        <p:column headerText="Horas de Clase">
+            #{learningUnit.classHours} 
+        </p:column>
+          
+        <p:column headerText="Horas de Taller">
+            #{learningUnit.workshopHours} 
+        </p:column>
+          
+        <p:column headerText="Horas de Laboratorio">
+            #{learningUnit.laboratoryHours} 
+        </p:column>
+
+        <p:column rendered="#{loginUI.user.isAdmin == 1}" headerText="Acciones">
+            <p:commandButton value="Modificar" action="#{learningUnitUI.redirectToModify(learningUnit)}" styleClass="btn btn-warning mr-2"/>
+            <p:commandButton value="Eliminar" action="#{learningUnitUI.deleteLearningUnit(learningUnit)}" styleClass="btn btn-danger mr-2" onclick="if(!confirm('¿Deseas eliminar esta unidad de aprendizaje?')) return false;"/>
+        </p:column>
+    </p:dataTable>
+
+  </div>
+  
+</h:body>
+
+</html>

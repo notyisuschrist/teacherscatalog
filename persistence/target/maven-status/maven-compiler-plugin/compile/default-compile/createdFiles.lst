@@ -1,0 +1,8 @@
+mx\changosuave\persistencia\InterfaceDAO.class
+mx\changosuave\integracion\ServiceLocator.class
+mx\changosuave\persistencia\HibernateUtil.class
+mx\changosuave\DAO\LearningUnitDAO.class
+mx\changosuave\DAO\TeacherDAO.class
+mx\changosuave\persistencia\AbstractDAO.class
+test\test.class
+mx\changosuave\DAO\UserDAO.class
