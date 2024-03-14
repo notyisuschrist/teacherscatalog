@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Modify Teacher</title>
+        <link rel="stylesheet" href="resources/style.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+        <style>
+            body {
+                background-color: #00723F;
+                color: black;
+            }
+
+            .commandButton {
+                background-color: #DD971A; 
+                border-color: #DD971A; 
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
+
+            .commandButton:hover {
+                background-color: #C28814;
+                border-color: #C28814;
+            }
+
+            #modifyTeacherForm {
+                margin: 0 auto;
+                padding: 20px;
+                background-color: white;
+                border-radius: 10px;
+                box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);
+                margin-top: 50px;
+            }
+
+            #modifyTeacherForm h\:panelGrid {
+                margin-top: 20px;
+            }
+
+            #modifyTeacherForm h\:outputLabel {
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            #modifyTeacherForm h\:inputText {
+                width: calc(100% - 18px); 
+                padding: 8px;
+                margin-top: 4px;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #f8f8f8;
+            }
+
+            h2{
+                text-align: center;
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <div class="card">
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="Asignaturas" action="learningunits.xhtml"/>
+                    <p:menuitem value="Maestros" action="teachers.xhtml" style="#{(loginUI.user.isAdmin == 0) ? 'display: none;' : ''}"/>
+                    <p:menuitem value="Perfil" action="index.xhtml"/>
+                    <f:facet name="options">
+                        <p:commandButton class="btn btn-success" value="Cerrar sesión" action="#{loginUI.logout()}"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </div>
+        <div class="container">
+            <h:form id="modifyTeacherForm">
+                <h2>Modificar profesor</h2>
+
+                <div class="form-group row">
+                    <p:outputLabel for="name" value="Nombre:" class="col-sm-2 col-form-label"/>
+                    <div class="col-sm-10">
+                        <p:inputText id="name" value="#{modifyTeacherBeanUI.teacher.name}" class="form-control" required="true" requiredMessage="Este campo es obligatorio" validatorMessage="Error de formato: Solo se permiten letras y espacios.">
+                            <f:validateRegex pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" />
+                        </p:inputText>
+                        <p:message for="name" styleClass="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <p:outputLabel for="surname" value="Apellido" class="col-sm-2 col-form-label"/>
+                    <div class="col-sm-10">
+                        <p:inputText id="surname" value="#{modifyTeacherBeanUI.teacher.surname}" class="form-control" required="true" requiredMessage="Este campo es obligatorio" validatorMessage="Error de formato: Solo se permiten letras y espacios.">
+                            <f:validateRegex pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$" />
+                        </p:inputText>
+                        <p:message for="surname" styleClass="text-danger" />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <p:outputLabel for="rfc" value="RFC:" class="col-sm-2 col-form-label"/>
+                    <div class="col-sm-10">
+                        <p:inputText id="rfc" value="#{modifyTeacherBeanUI.teacher.rfc}" class="form-control" required="true" requiredMessage="Este campo es obligatorio"/>
+                        <p:message for="rfc" styleClass="text-danger" />
+                    </div>
+                </div>
+
+                <p:commandButton value="Guardar" action="#{modifyTeacherBeanUI.saveTeacherChanges()}" class="btn commandButton text-white" />
+            </h:form>
+        </div>
+    </h:body>
+</html>

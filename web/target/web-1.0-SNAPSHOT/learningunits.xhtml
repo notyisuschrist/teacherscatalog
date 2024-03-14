@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Learning Units</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+
+        <style>
+            body {
+                background-color: #00723F; 
+                color: black;
+            }
+
+            .container {
+                background-color: white; 
+                margin-top: 50px;
+                padding: 20px;
+                border-radius: 10px;
+            }
+
+            .btn-primary {
+                background-color: #DD971A;
+                border-color: #DD971A;
+            }
+
+            .btn-primary:hover {
+                background-color: #C28814;
+                border-color: #C28814;
+            }
+
+
+            .form-control {
+                background-color: #F7F7F7;
+                border-color: #DDDDDD;
+                color: black;
+            }
+
+            .table {
+                margin-top: 20px;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .table th, .table td {
+                border: 1px solid #DDDDDD;
+                padding: 8px;
+                text-align: left;
+            }
+
+            .table th {
+                background-color: #DDDDDD;
+            }
+
+            .table tr:nth-child(even) {
+                background-color: #F2F2F2;
+            }
+            h2{
+                text-align: center;
+            }
+        </style>
+
+    </h:head>
+
+    <h:body>
+        <div class="card">
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="Asignaturas" action="learningunits.xhtml"/>
+                    <p:menuitem value="Maestros" action="teachers.xhtml" style="#{(loginUI.user.isAdmin == 0) ? 'display: none;' : ''}"/>
+                    <p:menuitem value="Perfil" action="index.xhtml"/>
+                    <f:facet name="options">
+                        <p:commandButton class="btn btn-success" value="Cerrar sesión" action="#{loginUI.logout()}"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </div>
+
+        <div class="container">
+
+            <h2>Unidades de Aprendizaje</h2>
+
+            <p:commandLink style="#{(loginUI.user.isAdmin == 0) ? 'display: none;' : ''}" action="createlearningunit" value="Crear nueva unidad"/>
+
+            <p:dataTable  id="learningUnitTable" value="#{learningUnitUI.learningUnits}" var="learningUnit" styleClass="table table-bordered">
+                <p:column headerText="ID">
+                    #{learningUnit.idLearningUnit} 
+                </p:column>
+
+                <p:column headerText="Nombre">
+                    #{learningUnit.name}
+                </p:column>
+
+                <p:column headerText="Horas de Clase">
+                    #{learningUnit.classHours} 
+                </p:column>
+
+                <p:column headerText="Horas de Taller">
+                    #{learningUnit.workshopHours} 
+                </p:column>
+
+                <p:column headerText="Horas de Laboratorio">
+                    #{learningUnit.laboratoryHours} 
+                </p:column>
+
+                <p:column rendered="#{loginUI.user.isAdmin == 1}" headerText="Acciones">
+                    <p:commandButton value="Modificar" action="#{learningUnitUI.redirectToModify(learningUnit)}" styleClass="btn btn-warning mr-2"/>
+                    <p:commandButton value="Eliminar" action="#{learningUnitUI.deleteLearningUnit(learningUnit)}" styleClass="btn btn-danger mr-2" onclick="if (!confirm('¿Deseas eliminar esta unidad de aprendizaje?'))
+                                return false;" update="learningUnitTable" />
+                </p:column>
+            </p:dataTable>
+
+        </div>
+
+    </h:body>
+
+</html>
