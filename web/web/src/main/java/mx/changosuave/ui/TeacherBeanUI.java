@@ -76,5 +76,6 @@ public class TeacherBeanUI implements Serializable {
     public void deleteTeacher(Teacher teacher) {
         teacherHelper.deleteTeacher(teacher);
         teachers.remove(teacher);
+
     }
 }
